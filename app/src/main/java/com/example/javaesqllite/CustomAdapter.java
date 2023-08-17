@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -20,6 +22,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     private Context context;
     private ArrayList book_id, book_title, book_author, book_pages;
     Activity activity;
+    Animation translate_anim;
 
     CustomAdapter(Activity activity, Context context, ArrayList book_id, ArrayList book_title, ArrayList book_author, ArrayList book_pages){
         this.activity = activity;
@@ -44,7 +47,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
     }
 
     @Override
-    public void onBindViewHolder(@NonNull MyViewHolder holder, final int position) {
+    public void onBindViewHolder(@NonNull MyViewHolder holder,  final int position) {
         holder.book_id_txt.setText(String.valueOf(book_id.get(position)));
         holder.book_title_txt.setText(String.valueOf(book_title.get(position)));
         holder.book_author_txt.setText(String.valueOf(book_author.get(position)));
@@ -58,6 +61,7 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
                 intent.putExtra("author", String.valueOf(book_author.get(position)));
                 intent.putExtra("pages", String.valueOf(book_pages.get(position)));
                 activity.startActivityForResult(intent, 1);
+                //activity.finish();
             }
         });
 
@@ -85,6 +89,8 @@ public class CustomAdapter extends RecyclerView.Adapter<CustomAdapter.MyViewHold
             book_author_txt = itemView.findViewById(R.id.book_author_txt);
             book_pages_txt = itemView.findViewById(R.id.book_pages_txt);
             linearLayout = itemView.findViewById(R.id.mainLayout);
+            translate_anim = AnimationUtils.loadAnimation(context, R.anim.translate_anim);
+            linearLayout.setAnimation(translate_anim);
 
 
 
